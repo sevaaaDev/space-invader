@@ -1,8 +1,10 @@
 import { DefaultLoader, ImageSource } from "excalibur";
 
 export const Resource = {
-  PlayerImg: new ImageSource("player.png"),
-  Gava: new ImageSource("gava.png"),
+  player: new ImageSource("player.png"),
+  gava: new ImageSource("gava_f_95.png"),
+  superGava: new ImageSource("super_gava.png"),
+  borg: new ImageSource("borg_a_60.png"),
 } as const;
 
 // TODO: change this to custom loader
