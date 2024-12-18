@@ -1,15 +1,4 @@
-import {
-  Actor,
-  ActorArgs,
-  CollisionGroup,
-  CollisionGroupManager,
-  CollisionType,
-  Color,
-  Engine,
-  ImageSource,
-  Keys,
-  Vector,
-} from "excalibur";
+import { Actor, ActorArgs, Engine, Keys, Vector } from "excalibur";
 import { Resource } from "../Resource";
 import { PlayerBullet } from "./PlayerBullet";
 
@@ -19,7 +8,7 @@ export class Player extends Actor {
   }
   override onInitialize(_engine: Engine): void {
     this.addTag("player");
-    this.graphics.use(Resource.PlayerImg.toSprite());
+    this.graphics.use(Resource.player.toSprite());
   }
   override onPreUpdate(engine: Engine, _elapsed: number): void {
     if (engine.input.keyboard.isHeld(Keys.L)) {

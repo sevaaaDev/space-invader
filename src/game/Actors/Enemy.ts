@@ -3,10 +3,6 @@ import {
   ActorArgs,
   Collider,
   CollisionContact,
-  CollisionGroup,
-  CollisionGroupManager,
-  CollisionType,
-  Color,
   Engine,
   EventEmitter,
   Scene,
@@ -33,10 +29,9 @@ export class Enemy extends Actor {
     super(props);
   }
   override onInitialize() {
-    this.graphics.use(Resource.Gava.toSprite());
-    this._handler = vent.on("reversedirection", () => {
-      console.log("wall");
-      this.vel.x *= -1;
+    this.graphics.use(Resource.gava.toSprite());
+    this._handler = vent.on("reversedirection", (e) => {
+      this.vel.x = e.velX;
     });
   }
   override onPreUpdate(engine: Engine, elapsed: number): void {
@@ -54,10 +49,10 @@ export class Enemy extends Actor {
       this._accTime = 0;
     }
     if (this.pos.x + this.width / 2 > engine.drawWidth) {
-      vent.emit("reversedirection");
+      vent.emit("reversedirection", { velX: -32 });
     }
     if (this.pos.x - this.width / 2 < 0) {
-      vent.emit("reversedirection");
+      vent.emit("reversedirection", { velX: 32 });
     }
   }
   override onCollisionStart(
@@ -70,7 +65,7 @@ export class Enemy extends Actor {
       this.actions.blink(100, 100, 1).die();
     }
   }
-  override onPreKill(scene: Scene): void {
+  override onPreKill(_scene: Scene): void {
     this._handler?.close();
   }
 }

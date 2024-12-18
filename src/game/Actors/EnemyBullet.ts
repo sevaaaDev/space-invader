@@ -8,6 +8,8 @@ import {
   Engine,
   Side,
 } from "excalibur";
+import { Player } from "./Player";
+import { PlayerBullet } from "./PlayerBullet";
 
 export class EnemyBullet extends Actor {
   constructor(props: ActorArgs) {
@@ -29,11 +31,10 @@ export class EnemyBullet extends Actor {
     side: Side,
     contact: CollisionContact,
   ): void {
-    if (other.owner) {
+    if (other.owner instanceof Player) {
       this.kill();
     }
-    if (other.owner.tags.has("player")) {
-      other.owner.kill();
+    if (other.owner instanceof PlayerBullet) {
       this.kill();
     }
   }
