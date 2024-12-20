@@ -6,10 +6,12 @@ import {
   Engine,
   EventEmitter,
   Graphic,
+  Random,
   Scene,
   Side,
   Sprite,
   Subscription,
+  Timer,
   Vector,
 } from "excalibur";
 import { Resource } from "../Resource";
@@ -24,10 +26,27 @@ type EnemyEvents = {
 };
 const vent = new EventEmitter<EnemyEvents>();
 
+const random = new Random(999);
 export class Enemy extends Actor {
   private _accTime: number = 0;
   private _handler: Subscription | null = null;
   private _sprite: Graphic | undefined;
+  private _shootTimer: Timer = new Timer({
+    fcn: () => {
+      this.scene?.engine.add(
+        new EnemyBullet({
+          pos: this.pos.clone().add(new Vector(0, this.height / 2 + 2)),
+          vel: new Vector(0, 32),
+          width: 1,
+          height: 4,
+        }),
+      );
+    },
+    interval: 3000,
+    random,
+    randomRange: [1000, 10000],
+    repeats: true,
+  });
   constructor(props: ActorArgs & { sprite?: Graphic }) {
     super(props);
     this._sprite = props.sprite;
@@ -39,21 +58,10 @@ export class Enemy extends Actor {
     this._handler = vent.on("reversedirection", (e) => {
       this.vel.x = e.velX;
     });
+    this.scene?.addTimer(this._shootTimer);
+    this._shootTimer.start();
   }
   override onPreUpdate(engine: Engine, elapsed: number): void {
-    this._accTime += elapsed;
-    if (this._accTime >= 5000) {
-      // TODO: change this to use timer instead
-      engine.add(
-        new EnemyBullet({
-          pos: this.pos.clone().add(new Vector(0, this.height / 2 + 2)),
-          vel: new Vector(0, 32),
-          width: 1,
-          height: 4,
-        }),
-      );
-      this._accTime = 0;
-    }
     if (this.pos.x + this.width / 2 > engine.drawWidth) {
       vent.emit("reversedirection", { velX: -32 });
     }
