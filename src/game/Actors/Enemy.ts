@@ -5,8 +5,10 @@ import {
   CollisionContact,
   Engine,
   EventEmitter,
+  Graphic,
   Scene,
   Side,
+  Sprite,
   Subscription,
   Vector,
 } from "excalibur";
@@ -25,11 +27,15 @@ const vent = new EventEmitter<EnemyEvents>();
 export class Enemy extends Actor {
   private _accTime: number = 0;
   private _handler: Subscription | null = null;
-  constructor(props: ActorArgs) {
+  private _sprite: Graphic | undefined;
+  constructor(props: ActorArgs & { sprite?: Graphic }) {
     super(props);
+    this._sprite = props.sprite;
   }
   override onInitialize() {
-    this.graphics.use(Resource.gava.toSprite());
+    if (this._sprite) {
+      this.graphics.use(this._sprite);
+    }
     this._handler = vent.on("reversedirection", (e) => {
       this.vel.x = e.velX;
     });
