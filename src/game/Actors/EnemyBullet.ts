@@ -32,6 +32,7 @@ export class EnemyBullet extends Actor {
     contact: CollisionContact,
   ): void {
     if (other.owner instanceof Player) {
+      other.owner.hit();
       this.kill();
     }
     if (other.owner instanceof PlayerBullet) {

@@ -3,6 +3,7 @@ import { Resource } from "../Resource";
 import { PlayerBullet } from "./PlayerBullet";
 
 export class Player extends Actor {
+  public health: number = 3;
   constructor(props: ActorArgs) {
     super({ ...props });
   }
@@ -27,5 +28,12 @@ export class Player extends Actor {
       );
     }
     this.vel.x = 0;
+  }
+  hit() {
+    this.health--;
+    console.log("health", this.health);
+    if (this.health === 0) {
+      this.kill();
+    }
   }
 }
