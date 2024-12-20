@@ -3,7 +3,7 @@ import { Player } from "../Actors/Player";
 import { Enemy } from "../Actors/Enemy";
 import { createEnemyPack } from "../Utils/createEnemyPack";
 
-export class Level1 extends Scene {
+export class Level2 extends Scene {
   player: Player = new Player({
     width: 16,
     height: 16,
@@ -15,8 +15,7 @@ export class Level1 extends Scene {
     console.log("hello");
     this.player.pos = vec(64, engine.drawHeight - 8);
     this.add(this.player);
-    let enemies = createEnemyPack(2, ["Gava", "Gava"]);
-    console.log(enemies);
+    let enemies = createEnemyPack(2, ["Gava", "Borg"]);
     enemies.forEach((e) => this.add(e));
     console.log(this.entities);
   }
