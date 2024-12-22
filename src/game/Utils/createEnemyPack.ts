@@ -1,12 +1,12 @@
-import { vec } from "excalibur";
-import { Enemy } from "../Actors/Enemy";
+import { Actor, vec } from "excalibur";
+import { Gava } from "../Actors/enemy/Gava";
 import { EnemyFactory } from "../Actors/EnemyFactory";
 
-export function createEnemyPack(rows: number, type: any[]) {
-  let enemies: Enemy[] = [];
+export function createEnemyPack(rows: number, cols: number, type: any[]) {
+  let enemies: Actor[] = [];
   let currentRow: number = 0;
   for (let j = 32; j < 32 + 16 * rows; j += 16) {
-    for (let i = 8; i < 24 * 8; i += 24) {
+    for (let i = 8; i < 24 * cols; i += 24) {
       enemies.push(EnemyFactory(type[currentRow], vec(i, j)));
     }
     currentRow++;

@@ -10,7 +10,7 @@ import {
   vec,
 } from "excalibur";
 import { EnemyBullet } from "./EnemyBullet";
-import { Enemy } from "./Enemy";
+import { Gava } from "./enemy/Gava";
 
 export class PlayerBullet extends Actor {
   constructor(props: ActorArgs) {
@@ -37,7 +37,7 @@ export class PlayerBullet extends Actor {
     if (other.owner instanceof EnemyBullet) {
       this.kill();
     }
-    if (other.owner instanceof Enemy) {
+    if (other.owner instanceof Gava) {
       this.kill();
     }
   }

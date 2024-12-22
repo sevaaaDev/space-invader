@@ -2,14 +2,17 @@ import { Engine, Scene, SceneActivationContext, vec } from "excalibur";
 import { EnemyType } from "../Actors/EnemyFactory";
 import { Player } from "../Actors/Player";
 import { createEnemyPack } from "../Utils/createEnemyPack";
-import { Enemy } from "../Actors/Enemy";
+import { Gava } from "../Actors/enemy/Gava";
 import { gameState } from "../State";
 import { updateHealthBar } from "../../ui/healtbar";
 import { updateLevelUI } from "../../ui/levelUi";
+import { EnemyBullet } from "../Actors/EnemyBullet";
+import { PlayerBullet } from "../Actors/PlayerBullet";
 
 class BaseLevel extends Scene {
   constructor(
     private _packRows: number,
+    private _packCols: number,
     private _template: EnemyType[],
     private _player: Player,
   ) {
@@ -29,14 +32,25 @@ class BaseLevel extends Scene {
     }
     this.add(this._player);
     this.add(this._player.shootTimer);
-    let enemies = createEnemyPack(this._packRows, this._template);
+    let enemies = createEnemyPack(
+      this._packRows,
+      this._packCols,
+      this._template,
+    );
     enemies.forEach((e) => this.add(e));
   }
   gameOver() {
     this.engine.goToScene("gameOverMenu");
   }
   checkWinning() {
-    if (this.entities.filter((e) => e instanceof Enemy).length === 1) {
+    if (
+      this.entities.filter(
+        (e) =>
+          !(e instanceof Player) &&
+          !(e instanceof EnemyBullet) &&
+          !(e instanceof PlayerBullet),
+      ).length === 1
+    ) {
       gameState.setState((s: any) => s.currentLevel++);
       this._player.actions
         .moveTo(
@@ -58,8 +72,9 @@ class BaseLevel extends Scene {
 
 export function createLevel(
   rows: number,
+  column: number,
   template: EnemyType[],
   player: Player,
 ) {
-  return new BaseLevel(rows, template, player);
+  return new BaseLevel(rows, column, template, player);
 }

@@ -14,20 +14,12 @@ import {
   Timer,
   Vector,
 } from "excalibur";
-import { Resource } from "../Resource";
-import { PlayerBullet } from "./PlayerBullet";
-import { EnemyBullet } from "./EnemyBullet";
-
-/* TODO: might move the event emitter or change how pubsub work
- * this might not be the correct way to do it, but it works
- */
-type EnemyEvents = {
-  reversedirection: {};
-};
-const vent = new EventEmitter<EnemyEvents>();
+import { PlayerBullet } from "../PlayerBullet";
+import { EnemyBullet } from "../EnemyBullet";
+import { vent } from "./event";
 
 const random = new Random(999);
-export class Enemy extends Actor {
+export class Borg extends Actor {
   private _accTime: number = 0;
   private _handler: Subscription | null = null;
   private _sprite: Graphic | undefined;
@@ -37,7 +29,7 @@ export class Enemy extends Actor {
         new EnemyBullet({
           pos: this.pos.clone().add(new Vector(0, this.height / 2 + 2)),
           vel: new Vector(0, 32),
-          width: 1,
+          width: 2,
           height: 4,
         }),
       );
@@ -55,7 +47,7 @@ export class Enemy extends Actor {
     if (this._sprite) {
       this.graphics.use(this._sprite);
     }
-    this._handler = vent.on("reversedirection", (e) => {
+    this._handler = vent.on("reversedirection", (e: any) => {
       this.vel.x = e.velX;
     });
     this.scene?.addTimer(this._shootTimer);

@@ -1,6 +1,6 @@
 import { Color, Engine, Scene, vec } from "excalibur";
 import { player, Player } from "../Actors/Player";
-import { Enemy } from "../Actors/Enemy";
+import { Gava } from "../Actors/enemy/Gava";
 import { createEnemyPack } from "../Utils/createEnemyPack";
 
 export class Level1 extends Scene {
@@ -22,7 +22,7 @@ export class Level1 extends Scene {
       engine.goToScene("menu");
       return;
     }
-    if (this.entities.filter((e) => e instanceof Enemy).length === 0) {
+    if (this.entities.filter((e) => e instanceof Gava).length === 0) {
       player.actions
         .moveTo(vec(engine.halfDrawWidth - 8, engine.drawHeight - 8), 94)
         .moveTo(vec(engine.halfDrawWidth - 8, 16), 128)

@@ -1,14 +1,12 @@
 import { player } from "./game/Actors/Player";
 import { loader } from "./game/Resource";
-import { Level1 } from "./game/Scenes/Level1";
-import { Level2 } from "./game/Scenes/Level2";
 import { createLevel } from "./game/Scenes/LevelFactory";
 import { BaseMenu } from "./game/Scenes/Menu";
 import "./style.css";
 import { Color, Engine, Resolution } from "excalibur";
 
 const config = {
-  scale: 3,
+  scale: 4,
   resWidth: 320,
   resHeight: 224,
   get vw() {
@@ -38,8 +36,11 @@ const game = new Engine({
   canvasElementId: "canvas",
 });
 
-const lvl1 = createLevel(2, ["Gava", "Gava"], player);
-const lvl2 = createLevel(2, ["Borg", "Gava"], player);
+// TODO: param for enemy speed
+const lvl1 = createLevel(2, 5, ["Gava", "Gava"], player);
+const lvl1 = createLevel(2, 6, ["Gava", "Gava"], player);
+const lvl2 = createLevel(2, 5, ["Borg", "Gava"], player);
+const lvl3 = createLevel(2, 5, ["Borg", "Gava"], player);
 const mainMenu = new BaseMenu("Space War", "Press ENTER to play");
 const gameOverMenu = new BaseMenu("Game Over", "Press ENTER to restart");
 const winMenu = new BaseMenu("You Win", "Press ENTER to next level");

@@ -18,6 +18,6 @@ export class State {
 // TODO: make this a singleton
 
 export const gameState = new State({
-  currentLevel: 1,
+  currentLevel: 2,
   score: 0,
 });
