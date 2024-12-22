@@ -1,38 +1,40 @@
-import { Engine, Scene, SceneActivationContext, Timer } from "excalibur";
+import {
+  Engine,
+  KeyEvent,
+  Scene,
+  SceneActivationContext,
+  Subscription,
+  Timer,
+} from "excalibur";
 import { gameState } from "../State";
 
 const ui: HTMLDivElement | null = document.querySelector(".ui");
-export class Menu extends Scene {
-  countdownTimer: Timer = new Timer({
-    fcn: () => {
-      console.log("h");
-      if (this.count === 0) {
-        this.count = 2;
-        gameState.setState("currentLevel", 2);
-        this.engine.goToScene(`level${gameState.state.currentLevel}`);
-        return;
-      }
-      this.countdownElement.innerText = `${this.count--}`;
-    },
-    numberOfRepeats: 3,
-    interval: 1000,
-    repeats: true,
-  });
-  count: number = 2;
-  countdownElement: HTMLParagraphElement = document.createElement("p");
+export class BaseMenu extends Scene {
+  private _playHandle!: Subscription;
+  constructor(
+    private _title: string,
+    private _text: string,
+  ) {
+    super();
+  }
   override onInitialize(engine: Engine): void {
-    this.add(this.countdownTimer);
+    this.engine = engine;
   }
   override onActivate(context: SceneActivationContext<unknown>): void {
+    const title = document.createElement("h1");
+    title.innerText = this._title;
     const text = document.createElement("p");
-    text.innerText = "Next Wave";
-    this.countdownElement.innerText = "3";
+    text.innerText = this._text;
+    this._playHandle = this.input.keyboard.on("press", (e: KeyEvent) => {
+      if (e.key === "Enter") {
+        this.engine.goToScene("level" + gameState.state.currentLevel);
+      }
+    });
+    ui?.appendChild(title);
     ui?.appendChild(text);
-    ui?.appendChild(this.countdownElement);
-    this.countdownTimer.reset();
-    this.countdownTimer.start();
   }
   override onDeactivate(context: SceneActivationContext): void {
+    this._playHandle.close();
     if (ui === null) {
       throw "Ui is null, maybe u forgot to add the element";
     }

@@ -2,7 +2,7 @@ import { vec, Vector } from "excalibur";
 import { Enemy } from "./Enemy";
 import { Resource } from "../Resource";
 
-type EnemyType = "Gava" | "Borg" | "SuperGava";
+export type EnemyType = "Gava" | "Borg" | "SuperGava";
 export function EnemyFactory(type: EnemyType, pos: Vector): Enemy {
   if (type === "Gava") {
     return new Enemy({

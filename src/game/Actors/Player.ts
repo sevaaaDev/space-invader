@@ -5,10 +5,10 @@ import { PlayerBullet } from "./PlayerBullet";
 export class Player extends Actor {
   public health: number = 3;
   private _hasShot: boolean = false;
-  private _timer: Timer = new Timer({
+  public shootTimer: Timer = new Timer({
     fcn: () => {
       this._hasShot = false;
-      this._timer.reset();
+      this.shootTimer.reset();
     },
     interval: 1000,
   });
@@ -18,8 +18,6 @@ export class Player extends Actor {
   override onInitialize(_engine: Engine): void {
     this.addTag("player");
     this.graphics.use(Resource.player.toSprite());
-    // FIX: timer doesnt get add on next level
-    this.scene?.addTimer(this._timer);
   }
   override onPreUpdate(engine: Engine, _elapsed: number): void {
     if (engine.input.keyboard.isHeld(Keys.L)) {
@@ -37,7 +35,7 @@ export class Player extends Actor {
           pos: this.pos.clone().add(new Vector(0, -this.height / 2)),
         }),
       );
-      this._timer.start();
+      this.shootTimer.start();
     }
     this.vel.x = 0;
   }
@@ -45,7 +43,7 @@ export class Player extends Actor {
     this.health--;
     console.log("health", this.health);
     if (this.health === 0) {
-      this.kill();
+      this.scene!.gameOver();
     }
   }
 }

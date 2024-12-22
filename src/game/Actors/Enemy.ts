@@ -77,6 +77,7 @@ export class Enemy extends Actor {
   ): void {
     if (other.owner instanceof PlayerBullet) {
       this.actions.blink(100, 100, 1).die();
+      this.scene!.checkWinning();
     }
   }
   override onPreKill(_scene: Scene): void {

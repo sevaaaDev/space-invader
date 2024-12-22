@@ -1,12 +1,11 @@
+import { player } from "./game/Actors/Player";
 import { loader } from "./game/Resource";
 import { Level1 } from "./game/Scenes/Level1";
 import { Level2 } from "./game/Scenes/Level2";
-import { Menu } from "./game/Scenes/Menu";
+import { createLevel } from "./game/Scenes/LevelFactory";
+import { BaseMenu } from "./game/Scenes/Menu";
 import "./style.css";
 import { Color, Engine, Resolution } from "excalibur";
-
-// TODO: bullets
-// add levels
 
 const config = {
   scale: 3,
@@ -39,11 +38,20 @@ const game = new Engine({
   canvasElementId: "canvas",
 });
 
-const lvl1 = new Level1();
-const lvl2 = new Level2();
-const menu = new Menu();
+const lvl1 = createLevel(2, ["Gava", "Gava"], player);
+const lvl2 = createLevel(2, ["Borg", "Gava"], player);
+const mainMenu = new BaseMenu("Space War", "Press ENTER to play");
+const gameOverMenu = new BaseMenu("Game Over", "Press ENTER to restart");
+const winMenu = new BaseMenu("You Won", "Press ENTER to next level");
+const finishMenu = new BaseMenu(
+  "You've finished the game",
+  "Press ENTER to restart",
+);
 game.add("level1", lvl1);
 game.add("level2", lvl2);
-game.add("menu", menu);
-game.goToScene("menu");
+game.add("mainMenu", mainMenu);
+game.add("gameOverMenu", gameOverMenu);
+game.add("winMenu", winMenu);
+game.add("finishMenu", finishMenu);
+game.goToScene("mainMenu");
 game.start(loader);
