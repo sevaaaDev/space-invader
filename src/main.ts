@@ -42,7 +42,7 @@ const lvl1 = createLevel(2, ["Gava", "Gava"], player);
 const lvl2 = createLevel(2, ["Borg", "Gava"], player);
 const mainMenu = new BaseMenu("Space War", "Press ENTER to play");
 const gameOverMenu = new BaseMenu("Game Over", "Press ENTER to restart");
-const winMenu = new BaseMenu("You Won", "Press ENTER to next level");
+const winMenu = new BaseMenu("You Win", "Press ENTER to next level");
 const finishMenu = new BaseMenu(
   "You've finished the game",
   "Press ENTER to restart",

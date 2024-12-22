@@ -1,6 +1,7 @@
 import { Actor, ActorArgs, Engine, Keys, Timer, Vector } from "excalibur";
 import { Resource } from "../Resource";
 import { PlayerBullet } from "./PlayerBullet";
+import { updateHealthBar } from "../../ui/healtbar";
 
 export class Player extends Actor {
   public health: number = 3;
@@ -42,6 +43,7 @@ export class Player extends Actor {
   hit() {
     this.health--;
     console.log("health", this.health);
+    updateHealthBar(this.health);
     if (this.health === 0) {
       this.scene!.gameOver();
     }

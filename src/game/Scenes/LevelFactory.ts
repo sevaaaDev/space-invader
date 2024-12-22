@@ -4,6 +4,8 @@ import { Player } from "../Actors/Player";
 import { createEnemyPack } from "../Utils/createEnemyPack";
 import { Enemy } from "../Actors/Enemy";
 import { gameState } from "../State";
+import { updateHealthBar } from "../../ui/healtbar";
+import { updateLevelUI } from "../../ui/levelUi";
 
 class BaseLevel extends Scene {
   constructor(
@@ -18,10 +20,12 @@ class BaseLevel extends Scene {
   }
   resetAndLoad() {
     this.clear();
+    updateLevelUI(gameState.state.currentLevel);
     this._player.pos = vec(64, this.engine.drawHeight - 8);
     this._player.actions.clearActions();
     if (this._player.health === 0) {
       this._player.health = 3;
+      updateHealthBar(this._player.health);
     }
     this.add(this._player);
     this.add(this._player.shootTimer);
@@ -41,7 +45,7 @@ class BaseLevel extends Scene {
         )
         .moveTo(vec(this.engine.halfDrawWidth - 8, 16), 128)
         .callMethod(() => {
-          if (gameState.state.currentLevel === 2) {
+          if (gameState.state.currentLevel === 11) {
             gameState.setState((s: any) => (s.currentLevel = 1));
             this.engine.goToScene("finishMenu");
             return;
