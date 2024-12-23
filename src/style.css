@@ -12,7 +12,12 @@ body {
 .container {
   margin: auto;
   max-width: fit-content;
+}
+.canvas-wrapper {
   position: relative;
+}
+.gui {
+  z-index: 9999;
 }
 canvas {
   border: 1px solid yellow;
