@@ -37,10 +37,20 @@ const game = new Engine({
 });
 
 // TODO: param for enemy speed
-const lvl1 = createLevel(2, 5, ["Gava", "Gava"], player);
-const lvl1 = createLevel(2, 6, ["Gava", "Gava"], player);
-const lvl2 = createLevel(2, 5, ["Borg", "Gava"], player);
-const lvl3 = createLevel(2, 5, ["Borg", "Gava"], player);
+const lvl1 = createLevel(2, 5, ["Gava", "Gava"], [32, 32], player);
+const lvl2 = createLevel(2, 6, ["Gava", "Gava"], [32, 32], player);
+const lvl3 = createLevel(2, 6, ["Gava", "Gava"], [48, 48], player);
+const lvl4 = createLevel(2, 6, ["Borg", "Gava"], [48, 48], player);
+const lvl5 = createLevel(2, 7, ["Borg", "Gava"], [48, 48], player);
+const lvl6 = createLevel(2, 8, ["Borg", "Gava"], [48, 48], player);
+const lvl7 = createLevel(2, 8, ["Borg", "Gava"], [56, 56], player);
+const lvl8 = createLevel(
+  3,
+  8,
+  ["SuperGava", "Borg", "Gava"],
+  [56, 56, 56],
+  player,
+);
 const mainMenu = new BaseMenu("Space War", "Press ENTER to play");
 const gameOverMenu = new BaseMenu("Game Over", "Press ENTER to restart");
 const winMenu = new BaseMenu("You Win", "Press ENTER to next level");
@@ -50,6 +60,12 @@ const finishMenu = new BaseMenu(
 );
 game.add("level1", lvl1);
 game.add("level2", lvl2);
+game.add("level3", lvl3);
+game.add("level4", lvl4);
+game.add("level5", lvl5);
+game.add("level6", lvl6);
+game.add("level7", lvl7);
+game.add("level8", lvl8);
 game.add("mainMenu", mainMenu);
 game.add("gameOverMenu", gameOverMenu);
 game.add("winMenu", winMenu);

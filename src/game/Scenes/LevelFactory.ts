@@ -14,6 +14,7 @@ class BaseLevel extends Scene {
     private _packRows: number,
     private _packCols: number,
     private _template: EnemyType[],
+    private _velTemplate: number[],
     private _player: Player,
   ) {
     super();
@@ -36,6 +37,7 @@ class BaseLevel extends Scene {
       this._packRows,
       this._packCols,
       this._template,
+      this._velTemplate,
     );
     enemies.forEach((e) => this.add(e));
   }
@@ -59,7 +61,7 @@ class BaseLevel extends Scene {
         )
         .moveTo(vec(this.engine.halfDrawWidth - 8, 16), 128)
         .callMethod(() => {
-          if (gameState.state.currentLevel === 11) {
+          if (gameState.state.currentLevel === 9) {
             gameState.setState((s: any) => (s.currentLevel = 1));
             this.engine.goToScene("finishMenu");
             return;
@@ -74,7 +76,8 @@ export function createLevel(
   rows: number,
   column: number,
   template: EnemyType[],
+  velTemplate: number[],
   player: Player,
 ) {
-  return new BaseLevel(rows, column, template, player);
+  return new BaseLevel(rows, column, template, velTemplate, player);
 }
