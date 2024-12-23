@@ -49,17 +49,18 @@ export class Gava extends Actor {
       this.graphics.use(this._sprite);
     }
     this._handler = vent.on("reversedirection", (e) => {
-      this.vel.x = e.velX;
+      if (Math.sign(this.vel.x) === e.sign) return;
+      this.vel.x *= -1;
     });
     this.scene?.addTimer(this._shootTimer);
     this._shootTimer.start();
   }
   override onPreUpdate(engine: Engine, elapsed: number): void {
     if (this.pos.x + this.width / 2 > engine.drawWidth) {
-      vent.emit("reversedirection", { velX: -32 });
+      vent.emit("reversedirection", { sign: -1 });
     }
     if (this.pos.x - this.width / 2 < 0) {
-      vent.emit("reversedirection", { velX: 32 });
+      vent.emit("reversedirection", { sign: 1 });
     }
   }
   override onCollisionStart(

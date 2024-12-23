@@ -17,6 +17,7 @@ export class EnemyBullet extends Actor {
       ...props,
       color: Color.Yellow,
       collisionType: CollisionType.Passive,
+      z: -1,
     });
   }
   override onInitialize(engine: Engine): void {
