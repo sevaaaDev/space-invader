@@ -7,6 +7,7 @@ import {
   Color,
   Engine,
   Side,
+  vec,
 } from "excalibur";
 import { Player } from "./Player";
 import { PlayerBullet } from "./PlayerBullet";
@@ -17,6 +18,7 @@ export class EnemyBullet extends Actor {
       ...props,
       color: Color.Yellow,
       collisionType: CollisionType.Passive,
+      vel: vec(0, 128),
       z: -1,
     });
   }

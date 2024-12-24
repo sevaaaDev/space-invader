@@ -11,6 +11,7 @@ import {
 } from "excalibur";
 import { EnemyBullet } from "./EnemyBullet";
 import { Gava } from "./enemy/Gava";
+import { EnemyBase } from "./EnemyBase";
 
 export class PlayerBullet extends Actor {
   constructor(props: ActorArgs) {
@@ -20,7 +21,7 @@ export class PlayerBullet extends Actor {
       height: 4,
       color: Color.Green,
       collisionType: CollisionType.Passive,
-      vel: vec(0, -32),
+      vel: vec(0, -128),
     });
   }
   override onInitialize(engine: Engine): void {
@@ -37,7 +38,7 @@ export class PlayerBullet extends Actor {
     if (other.owner instanceof EnemyBullet) {
       this.kill();
     }
-    if (other.owner instanceof Gava) {
+    if (other.owner instanceof EnemyBase) {
       this.kill();
     }
   }
