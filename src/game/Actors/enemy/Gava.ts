@@ -1,15 +1,19 @@
 import {
   Actor,
   ActorArgs,
+  Animation,
+  AnimationStrategy,
   Collider,
   CollisionContact,
   Engine,
   EventEmitter,
   Graphic,
   Random,
+  range,
   Scene,
   Side,
   Sprite,
+  SpriteSheet,
   Subscription,
   Timer,
   Vector,
@@ -20,7 +24,23 @@ import { EnemyBullet } from "../EnemyBullet";
 import { vent } from "./event";
 import { EnemyBase } from "../EnemyBase";
 
+const sheet = SpriteSheet.fromImageSource({
+  image: Resource.gavaSheet,
+  grid: {
+    rows: 1,
+    columns: 4,
+    spriteWidth: 16,
+    spriteHeight: 16,
+  },
+});
 export class Gava extends EnemyBase {
+  public anim = Animation.fromSpriteSheet(
+    sheet,
+    range(1, 4),
+    100,
+    AnimationStrategy.End,
+  );
+
   override shoot(): void {
     this.scene?.engine.add(
       new EnemyBullet({
@@ -30,5 +50,12 @@ export class Gava extends EnemyBase {
         height: 4,
       }),
     );
+  }
+  override hit() {
+    this.graphics.use(this.anim);
+    this.anim.events.once("end", () => {
+      console.log("killed");
+      this.kill();
+    });
   }
 }

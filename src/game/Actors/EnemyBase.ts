@@ -39,8 +39,7 @@ export class EnemyBase extends Actor {
     // override
   }
   hit() {
-    this.scene!.checkWinning();
-    this.actions.blink(100, 100, 1).die();
+    // override
   }
   override onInitialize() {
     if (this._sprite) {
@@ -69,6 +68,7 @@ export class EnemyBase extends Actor {
   ): void {
     if (other.owner instanceof PlayerBullet) {
       this.hit();
+      this.scene!.checkWinning();
     }
   }
   override onPreKill(_scene: Scene): void {
