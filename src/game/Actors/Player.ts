@@ -6,6 +6,7 @@ import { updateHealthBar } from "../../ui/healtbar";
 export class Player extends Actor {
   public health: number = 3;
   private _hasShot: boolean = false;
+  public move: "Left" | "Right" | false = false;
   public shootTimer: Timer = new Timer({
     fcn: () => {
       this._hasShot = false;
@@ -20,25 +21,49 @@ export class Player extends Actor {
     this.addTag("player");
     this.graphics.use(Resource.player.toSprite());
   }
-  override onPreUpdate(engine: Engine, _elapsed: number): void {
-    if (engine.input.keyboard.isHeld(Keys.L)) {
-      this.vel.x = 64;
-      return;
-    }
-    if (engine.input.keyboard.isHeld(Keys.H)) {
-      this.vel.x = -64;
-      return;
-    }
-    if (engine.input.keyboard.wasPressed(Keys.Space) && !this._hasShot) {
+  shoot() {
+    if (!this._hasShot) {
       this._hasShot = true;
-      engine.add(
+      this.scene?.engine.add(
         new PlayerBullet({
           pos: this.pos.clone().add(new Vector(0, -this.height / 2)),
         }),
       );
       this.shootTimer.start();
     }
-    this.vel.x = 0;
+  }
+  override onPreUpdate(engine: Engine, _elapsed: number): void {
+    if (engine.input.keyboard.isHeld(Keys.L)) {
+      this.move = "Right";
+    }
+    if (engine.input.keyboard.isHeld(Keys.H)) {
+      this.move = "Left";
+    }
+    if (
+      engine.input.keyboard.wasReleased(Keys.L) ||
+      engine.input.keyboard.wasReleased(Keys.H)
+    ) {
+      // without this it will stay moving
+      this.move = false;
+    }
+    if (engine.input.keyboard.wasPressed(Keys.Space)) {
+      this.shoot();
+    }
+    this.handleMove(this.move);
+  }
+  handleMove(move: "Right" | "Left" | false) {
+    if (move === false) {
+      this.vel.x = 0;
+      return;
+    }
+    if (move === "Left") {
+      this.vel.x = -64;
+      return;
+    }
+    if (move === "Right") {
+      this.vel.x = 64;
+      return;
+    }
   }
   hit() {
     this.health--;

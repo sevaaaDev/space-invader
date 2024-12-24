@@ -1,6 +1,6 @@
 import { Engine, Scene, SceneActivationContext, vec } from "excalibur";
 import { EnemyType } from "../Actors/EnemyFactory";
-import { Player } from "../Actors/Player";
+import { player, Player } from "../Actors/Player";
 import { createEnemyPack } from "../Utils/createEnemyPack";
 import { Gava } from "../Actors/enemy/Gava";
 import { gameState } from "../State";
@@ -10,6 +10,15 @@ import { EnemyBullet } from "../Actors/EnemyBullet";
 import { PlayerBullet } from "../Actors/PlayerBullet";
 
 class BaseLevel extends Scene {
+  private _playerLeft = (e: Event) => {
+    e.preventDefault();
+    this._player.move = "Left";
+  };
+  private _playerRight = (e: Event) => {
+    e.preventDefault();
+    this._player.move = "Right";
+  };
+  private _playerStay = () => (this._player.move = false);
   constructor(
     private _packRows: number,
     private _packCols: number,
@@ -21,6 +30,29 @@ class BaseLevel extends Scene {
   }
   override onActivate(context: SceneActivationContext<unknown>): void {
     this.resetAndLoad();
+    this.initDOMListener();
+  }
+  override onDeactivate(context: SceneActivationContext): void {
+    this.removeDOMListener();
+  }
+  removeDOMListener() {
+    const leftBtn: HTMLButtonElement | null = document.querySelector(".left");
+    const rightBtn: HTMLButtonElement | null = document.querySelector(".right");
+    leftBtn!.onpointerdown = null;
+    rightBtn!.onpointerdown = null;
+    leftBtn!.onpointerup = null;
+    rightBtn!.onpointerup = null;
+  }
+
+  initDOMListener() {
+    const leftBtn: HTMLButtonElement | null = document.querySelector(".left");
+    const rightBtn: HTMLButtonElement | null = document.querySelector(".right");
+    const mainBtn: HTMLButtonElement | null = document.querySelector(".main");
+    leftBtn!.onpointerdown = this._playerLeft;
+    rightBtn!.onpointerdown = this._playerRight;
+    mainBtn!.onclick = () => this._player.shoot();
+    leftBtn!.onpointerup = this._playerStay;
+    rightBtn!.onpointerup = this._playerStay;
   }
   resetAndLoad() {
     this.clear();
@@ -63,6 +95,8 @@ class BaseLevel extends Scene {
         .callMethod(() => {
           if (gameState.state.currentLevel === 9) {
             gameState.setState((s: any) => (s.currentLevel = 1));
+            this._player.health = 3;
+            updateHealthBar(3);
             this.engine.goToScene("finishMenu");
             return;
           }
