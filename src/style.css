@@ -3,13 +3,29 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: "press-start";
+  src: url("../public/PrStart.ttf") format("truetype");
+}
 body {
   background-color: black;
   color: white;
   padding: 3rem 0;
   display: flex;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: "press-start";
+  text-align: center;
+}
+h1 {
+  font-size: 1.5rem;
+}
+p {
+  font-size: 0.75rem;
+}
+canvas {
+  border-bottom: 2px solid white;
 }
 
 .container {
@@ -22,17 +38,18 @@ body {
 .gui {
   z-index: 9999;
 }
-canvas {
-  border: 1px solid yellow;
-}
 .flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+.health {
+  display: flex;
+}
 img {
-  width: 32px;
-  height: 32px;
+  width: 16px;
+  height: 16px;
+  aspect-ratio: 1;
   image-rendering: pixelated;
 }
 .ui {
@@ -41,6 +58,7 @@ img {
   top: 0;
   color: white;
   display: flex;
+  gap: 1rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
