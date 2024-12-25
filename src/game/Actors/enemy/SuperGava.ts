@@ -1,26 +1,11 @@
 import {
-  Actor,
-  ActorArgs,
-  Collider,
-  CollisionContact,
-  Engine,
-  EventEmitter,
-  Graphic,
-  Random,
-  Scene,
-  Side,
-  Sprite,
   SpriteSheet,
-  Subscription,
-  Timer,
   Vector,
   Animation,
   AnimationStrategy,
   range,
 } from "excalibur";
-import { PlayerBullet } from "../PlayerBullet";
 import { EnemyBullet } from "../EnemyBullet";
-import { vent } from "./event";
 import { EnemyBase } from "../EnemyBase";
 import { Resource } from "../../Resource";
 
@@ -34,7 +19,6 @@ const sheet = SpriteSheet.fromImageSource({
   },
 });
 
-const random = new Random(999);
 export class SuperGava extends EnemyBase {
   public anim = Animation.fromSpriteSheet(
     sheet,

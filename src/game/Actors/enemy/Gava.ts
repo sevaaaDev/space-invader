@@ -1,27 +1,12 @@
 import {
-  Actor,
-  ActorArgs,
   Animation,
   AnimationStrategy,
-  Collider,
-  CollisionContact,
-  Engine,
-  EventEmitter,
-  Graphic,
-  Random,
   range,
-  Scene,
-  Side,
-  Sprite,
   SpriteSheet,
-  Subscription,
-  Timer,
   Vector,
 } from "excalibur";
 import { Resource } from "../../Resource";
-import { PlayerBullet } from "../PlayerBullet";
 import { EnemyBullet } from "../EnemyBullet";
-import { vent } from "./event";
 import { EnemyBase } from "../EnemyBase";
 
 const sheet = SpriteSheet.fromImageSource({

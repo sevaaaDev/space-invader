@@ -1,8 +1,7 @@
-import { Engine, Scene, SceneActivationContext, vec } from "excalibur";
+import { Scene, SceneActivationContext, vec } from "excalibur";
 import { EnemyType } from "../Actors/EnemyFactory";
-import { player, Player } from "../Actors/Player";
+import { Player } from "../Actors/Player";
 import { createEnemyPack } from "../Utils/createEnemyPack";
-import { Gava } from "../Actors/enemy/Gava";
 import { gameState } from "../State";
 import { updateHealthBar } from "../../ui/healtbar";
 import { updateLevelUI } from "../../ui/levelUi";

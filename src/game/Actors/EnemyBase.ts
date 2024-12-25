@@ -5,15 +5,12 @@ import {
   Collider,
   CollisionContact,
   Engine,
-  EventEmitter,
   Graphic,
   Random,
   Scene,
   Side,
-  Sprite,
   Subscription,
   Timer,
-  Vector,
 } from "excalibur";
 import { PlayerBullet } from "./PlayerBullet";
 import { vent } from "./enemy/event";

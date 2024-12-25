@@ -1,12 +1,4 @@
-import {
-  Actor,
-  ActorArgs,
-  Engine,
-  Keys,
-  Scene,
-  Timer,
-  Vector,
-} from "excalibur";
+import { Actor, ActorArgs, Engine, Keys, Timer, Vector } from "excalibur";
 import { Resource } from "../Resource";
 import { PlayerBullet } from "./PlayerBullet";
 import { updateHealthBar } from "../../ui/healtbar";
