@@ -51,8 +51,9 @@ export class Borg extends EnemyBase {
       }),
     );
   }
-  override hit(): void {
+  override hit(): Animation | null {
     this.graphics.use(this.anim);
     this.anim.events.once("end", () => this.kill());
+    return this.anim;
   }
 }

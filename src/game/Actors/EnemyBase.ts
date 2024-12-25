@@ -1,6 +1,7 @@
 import {
   Actor,
   ActorArgs,
+  Animation,
   Collider,
   CollisionContact,
   Engine,
@@ -38,8 +39,9 @@ export class EnemyBase extends Actor {
   shoot() {
     // override
   }
-  hit() {
+  hit(): Animation | null {
     // override
+    return null;
   }
   override onInitialize() {
     if (this._sprite) {
@@ -67,8 +69,11 @@ export class EnemyBase extends Actor {
     _contact: CollisionContact,
   ): void {
     if (other.owner instanceof PlayerBullet) {
-      this.hit();
-      this.scene!.checkWinning();
+      let anim: Animation | null = this.hit();
+      if (anim === null) return;
+      anim.events.once("end", () => {
+        this.scene!.checkWinning();
+      });
     }
   }
   override onPreKill(_scene: Scene): void {

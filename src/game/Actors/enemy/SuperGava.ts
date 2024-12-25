@@ -61,15 +61,14 @@ export class SuperGava extends EnemyBase {
       }),
     );
   }
-  override hit(): void {
+  override hit(): Animation | null {
     this.health--;
     this.graphics.use(sheet.getSprite(1, 0));
     if (this.health === 0) {
       this.graphics.use(this.anim);
-      this.scene!.checkWinning();
-      this.anim.events.once("end", () => {
-        this.kill();
-      });
+      this.anim.events.once("end", () => this.kill());
+      return this.anim;
     }
+    return null;
   }
 }

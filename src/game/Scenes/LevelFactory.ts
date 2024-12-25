@@ -74,6 +74,7 @@ class BaseLevel extends Scene {
     enemies.forEach((e) => this.add(e));
   }
   gameOver() {
+    gameState.setState((s: any) => (s.currentLevel = 1));
     this.engine.goToScene("gameOverMenu");
   }
   checkWinning() {
@@ -83,7 +84,7 @@ class BaseLevel extends Scene {
           !(e instanceof Player) &&
           !(e instanceof EnemyBullet) &&
           !(e instanceof PlayerBullet),
-      ).length === 1
+      ).length <= 1
     ) {
       gameState.setState((s: any) => s.currentLevel++);
       this._player.actions

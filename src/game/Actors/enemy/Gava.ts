@@ -51,11 +51,9 @@ export class Gava extends EnemyBase {
       }),
     );
   }
-  override hit() {
+  override hit(): Animation | null {
     this.graphics.use(this.anim);
-    this.anim.events.once("end", () => {
-      console.log("killed");
-      this.kill();
-    });
+    this.anim.events.once("end", () => this.kill());
+    return this.anim;
   }
 }
