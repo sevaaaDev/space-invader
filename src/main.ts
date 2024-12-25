@@ -3,10 +3,10 @@ import { loader } from "./game/Resource";
 import { createLevel } from "./game/Scenes/LevelFactory";
 import { BaseMenu } from "./game/Scenes/Menu";
 import "./style.css";
-import { Color, Engine, Resolution } from "excalibur";
+import { Color, Engine } from "excalibur";
 
 const config = {
-  scale: 4,
+  scale: 2,
   resWidth: 340,
   resHeight: 224,
   get vw() {
@@ -36,7 +36,6 @@ const game = new Engine({
   canvasElementId: "canvas",
 });
 
-// TODO: press enter to play (on mobile). try use event delegation on level class
 const lvl1 = createLevel(2, 5, ["Gava", "Gava"], [32, 32], player);
 const lvl2 = createLevel(2, 6, ["Gava", "Gava"], [32, 32], player);
 const lvl3 = createLevel(2, 6, ["Gava", "Gava"], [48, 48], player);
