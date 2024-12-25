@@ -40,8 +40,8 @@ class BaseLevel extends Scene {
     const rightBtn: HTMLButtonElement | null = document.querySelector(".right");
     leftBtn!.onpointerdown = null;
     rightBtn!.onpointerdown = null;
-    leftBtn!.onpointerup = null;
-    rightBtn!.onpointerup = null;
+    leftBtn!.onpointerleave = null;
+    rightBtn!.onpointerleave = null;
   }
 
   initDOMListener() {
@@ -51,8 +51,8 @@ class BaseLevel extends Scene {
     leftBtn!.onpointerdown = this._playerLeft;
     rightBtn!.onpointerdown = this._playerRight;
     mainBtn!.onclick = () => this._player.shoot();
-    leftBtn!.onpointerup = this._playerStay;
-    rightBtn!.onpointerup = this._playerStay;
+    leftBtn!.onpointerleave = this._playerStay;
+    rightBtn!.onpointerleave = this._playerStay;
   }
   resetAndLoad() {
     this.clear();
