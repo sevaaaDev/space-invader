@@ -38,8 +38,9 @@ export class BaseMenu extends Scene {
     title.innerText = this._title;
     const text = document.createElement("p");
     text.innerText = this._text;
-    this.input.keyboard.once("press", (e: KeyEvent) => {
+    const handle = this.input.keyboard.on("press", (e: KeyEvent) => {
       if (e.key === "Enter") {
+        handle.close();
         this.engine.goToScene("level" + gameState.state.currentLevel);
       }
     });
