@@ -17,9 +17,11 @@ import {
 } from "excalibur";
 import { PlayerBullet } from "./PlayerBullet";
 import { vent } from "./enemy/event";
+import { BaseLevel } from "../Scenes/LevelFactory";
 
 const random = new Random(999);
 export class EnemyBase extends Actor {
+  public level: BaseLevel | null = null;
   private _accTime: number = 0;
   private _handler: Subscription | null = null;
   private _sprite: Graphic | undefined;
@@ -43,11 +45,12 @@ export class EnemyBase extends Actor {
     // override
     return null;
   }
-  override onInitialize() {
+  override onInitialize(engine: Engine) {
+    this.level = engine.currentScene as BaseLevel;
     if (this._sprite) {
       this.graphics.use(this._sprite);
     }
-    this._handler = vent.on("reversedirection", (e) => {
+    this._handler = vent.on("reversedirection", (e: any) => {
       if (Math.sign(this.vel.x) === e.sign) return;
       this.vel.x *= -1;
     });
@@ -72,7 +75,7 @@ export class EnemyBase extends Actor {
       let anim: Animation | null = this.hit();
       if (anim === null) return;
       anim.events.once("end", () => {
-        this.scene!.checkWinning();
+        this.level?.checkWinning();
       });
     }
   }

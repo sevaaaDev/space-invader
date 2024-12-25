@@ -1,10 +1,20 @@
-import { Actor, ActorArgs, Engine, Keys, Timer, Vector } from "excalibur";
+import {
+  Actor,
+  ActorArgs,
+  Engine,
+  Keys,
+  Scene,
+  Timer,
+  Vector,
+} from "excalibur";
 import { Resource } from "../Resource";
 import { PlayerBullet } from "./PlayerBullet";
 import { updateHealthBar } from "../../ui/healtbar";
+import { BaseLevel } from "../Scenes/LevelFactory";
 
 export class Player extends Actor {
   public health: number = 3;
+  public level: BaseLevel | null = null;
   private _hasShot: boolean = false;
   public move: "Left" | "Right" | false = false;
   public shootTimer: Timer = new Timer({
@@ -20,6 +30,9 @@ export class Player extends Actor {
   override onInitialize(_engine: Engine): void {
     this.addTag("player");
     this.graphics.use(Resource.player.toSprite());
+  }
+  setLevel(scene: BaseLevel) {
+    this.level = scene;
   }
   shoot() {
     if (!this._hasShot) {
@@ -80,7 +93,7 @@ export class Player extends Actor {
     updateHealthBar(this.health);
     if (this.health === 0) {
       this.move = false;
-      this.scene!.gameOver();
+      this.level?.gameOver();
     }
   }
 }

@@ -8,13 +8,13 @@ import {
   Engine,
   Side,
   vec,
+  Vector,
 } from "excalibur";
 import { EnemyBullet } from "./EnemyBullet";
 import { Gava } from "./enemy/Gava";
 import { EnemyBase } from "./EnemyBase";
-
 export class PlayerBullet extends Actor {
-  constructor(props: ActorArgs) {
+  constructor(props: { pos: Vector }) {
     super({
       ...props,
       width: 1,

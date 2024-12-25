@@ -9,7 +9,7 @@ import { updateLevelUI } from "../../ui/levelUi";
 import { EnemyBullet } from "../Actors/EnemyBullet";
 import { PlayerBullet } from "../Actors/PlayerBullet";
 
-class BaseLevel extends Scene {
+export class BaseLevel extends Scene {
   private _playerLeft = (e: Event) => {
     e.preventDefault();
     this._player.move = "Left";
@@ -57,8 +57,12 @@ class BaseLevel extends Scene {
   resetAndLoad() {
     this.clear();
     updateLevelUI(gameState.state.currentLevel);
-    this._player.pos = vec(64, this.engine.drawHeight - 8);
+    this._player.pos = vec(
+      this.engine.halfDrawWidth,
+      this.engine.drawHeight - 8,
+    );
     this._player.actions.clearActions();
+    this._player.setLevel(this);
     if (this._player.health === 0) {
       this._player.health = 3;
       updateHealthBar(this._player.health);
@@ -90,9 +94,9 @@ class BaseLevel extends Scene {
       this._player.actions
         .moveTo(
           vec(this.engine.halfDrawWidth - 8, this.engine.drawHeight - 8),
-          94,
+          128,
         )
-        .moveTo(vec(this.engine.halfDrawWidth - 8, 16), 128)
+        .moveTo(vec(this.engine.halfDrawWidth - 8, 16), 168)
         .callMethod(() => {
           if (gameState.state.currentLevel > 8) {
             gameState.setState((s: any) => (s.currentLevel = 1));
