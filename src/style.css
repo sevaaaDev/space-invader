@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: "press-start";
-  src: url("../public/PrStart.ttf") format("truetype");
+  src: url("/PrStart.ttf") format("truetype");
 }
 body {
   background-color: black;
