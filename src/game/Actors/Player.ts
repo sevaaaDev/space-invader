@@ -40,6 +40,15 @@ export class Player extends Actor {
       this.move = "Left";
     }
     if (
+      this.pos.x + this.width / 2 > engine.drawWidth &&
+      this.move !== "Left"
+    ) {
+      this.move = false;
+    }
+    if (this.pos.x - this.width / 2 < 0 && this.move !== "Right") {
+      this.move = false;
+    }
+    if (
       engine.input.keyboard.wasReleased(Keys.L) ||
       engine.input.keyboard.wasReleased(Keys.H)
     ) {
