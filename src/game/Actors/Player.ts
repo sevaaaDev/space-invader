@@ -70,6 +70,7 @@ export class Player extends Actor {
     console.log("health", this.health);
     updateHealthBar(this.health);
     if (this.health === 0) {
+      this.move = false;
       this.scene!.gameOver();
     }
   }
