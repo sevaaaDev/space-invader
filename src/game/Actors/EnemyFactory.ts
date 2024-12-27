@@ -4,11 +4,14 @@ import { Resource } from "../Resource";
 import { Borg } from "./enemy/Borg";
 import { SuperGava } from "./enemy/SuperGava";
 
+// TODO:
+// Lmao, ive gone from create level > create enemypack > enemy factory > enemy base class just to add 1 new option
 export type EnemyType = "Gava" | "Borg" | "SuperGava";
 export function EnemyFactory(
   type: EnemyType,
   pos: Vector,
   velX: number = 32,
+  isHardMode: boolean,
 ): Actor {
   if (type === "Gava") {
     return new Gava({
@@ -17,6 +20,7 @@ export function EnemyFactory(
       height: 16,
       vel: vec(velX, 0),
       sprite: Resource.gava.toSprite(),
+      isHardMode,
     });
   }
   if (type === "Borg") {
@@ -26,6 +30,7 @@ export function EnemyFactory(
       height: 16,
       vel: vec(velX, 0),
       sprite: Resource.borg.toSprite(),
+      isHardMode,
     });
   }
   if (type === "SuperGava") {
@@ -35,6 +40,7 @@ export function EnemyFactory(
       height: 16,
       vel: vec(velX, 0),
       sprite: Resource.superGava.toSprite(),
+      isHardMode,
     });
   }
   throw "No enemy type given";

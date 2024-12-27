@@ -19,6 +19,7 @@ import { BaseLevel } from "../Scenes/LevelFactory";
 const random = new Random(999);
 export class EnemyBase extends Actor {
   public level: BaseLevel | null = null;
+  private _isHardMode: boolean = false;
   private _accTime: number = 0;
   private _handler: Subscription | null = null;
   private _sprite: Graphic | undefined;
@@ -31,9 +32,10 @@ export class EnemyBase extends Actor {
     randomRange: [1000, 10000],
     repeats: true,
   });
-  constructor(props: ActorArgs & { sprite?: Graphic }) {
+  constructor(props: ActorArgs & { sprite?: Graphic; isHardMode?: boolean }) {
     super(props);
     this._sprite = props.sprite;
+    this._isHardMode = props.isHardMode ?? false;
   }
   shoot() {
     // override
@@ -50,6 +52,9 @@ export class EnemyBase extends Actor {
     this._handler = vent.on("reversedirection", (e: any) => {
       if (Math.sign(this.vel.x) === e.sign) return;
       this.vel.x *= -1;
+      if (this._isHardMode) {
+        this.pos.y += this.height;
+      }
     });
     this.scene?.addTimer(this._shootTimer);
     this._shootTimer.start();

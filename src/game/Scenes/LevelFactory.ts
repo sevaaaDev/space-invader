@@ -24,6 +24,7 @@ export class BaseLevel extends Scene {
     private _template: EnemyType[],
     private _velTemplate: number[],
     private _player: Player,
+    private _isHardMode: boolean = false,
   ) {
     super();
   }
@@ -73,6 +74,7 @@ export class BaseLevel extends Scene {
       this._packCols,
       this._template,
       this._velTemplate,
+      this._isHardMode,
     );
     enemies.forEach((e) => this.add(e));
   }
@@ -116,6 +118,7 @@ export function createLevel(
   template: EnemyType[],
   velTemplate: number[],
   player: Player,
+  isHardMode: boolean = false,
 ) {
-  return new BaseLevel(rows, column, template, velTemplate, player);
+  return new BaseLevel(rows, column, template, velTemplate, player, isHardMode);
 }

@@ -47,8 +47,24 @@ const lvl8 = createLevel(
   3,
   8,
   ["SuperGava", "Borg", "Gava"],
-  [56, 56, 56],
+  [64, 64, 64],
   player,
+);
+const lvl9 = createLevel(
+  3,
+  8,
+  ["SuperGava", "Borg", "Gava"],
+  [24, 24, 24],
+  player,
+  true,
+);
+const lvl10 = createLevel(
+  3,
+  8,
+  ["SuperGava", "SuperGava", "Gava"],
+  [24, 24, 24],
+  player,
+  true,
 );
 const mainMenu = new BaseMenu("Space War", "Press ENTER to play");
 const gameOverMenu = new BaseMenu("Game Over", "Press ENTER to restart");
@@ -65,6 +81,8 @@ game.add("level5", lvl5);
 game.add("level6", lvl6);
 game.add("level7", lvl7);
 game.add("level8", lvl8);
+game.add("level9", lvl9);
+game.add("level10", lvl10);
 game.add("mainMenu", mainMenu);
 game.add("gameOverMenu", gameOverMenu);
 game.add("winMenu", winMenu);
