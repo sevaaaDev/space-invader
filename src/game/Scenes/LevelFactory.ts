@@ -57,6 +57,7 @@ export class BaseLevel extends Scene {
   resetAndLoad() {
     this.clear();
     updateLevelUI(gameState.state.currentLevel);
+    this._player.move = false;
     this._player.pos = vec(
       this.engine.halfDrawWidth,
       this.engine.drawHeight - 8,
@@ -80,6 +81,8 @@ export class BaseLevel extends Scene {
   }
   gameOver() {
     gameState.setState((s: any) => (s.currentLevel = 1));
+    this._player.health = 3;
+    updateHealthBar(3);
     this.engine.goToScene("gameOverMenu");
   }
   checkWinning() {
