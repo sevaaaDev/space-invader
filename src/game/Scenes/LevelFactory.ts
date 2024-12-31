@@ -99,7 +99,7 @@ export class BaseLevel extends Scene {
         )
         .moveTo(vec(this.engine.halfDrawWidth - 8, 16), 168)
         .callMethod(() => {
-          if (gameState.state.currentLevel > 8) {
+          if (gameState.state.currentLevel > gameState.state.maxLevel) {
             gameState.setState((s: any) => (s.currentLevel = 1));
             this._player.health = 3;
             updateHealthBar(3);
