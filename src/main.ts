@@ -62,7 +62,7 @@ const lvl10 = createLevel(
   3,
   8,
   ["SuperGava", "SuperGava", "Gava"],
-  [24, 24, 24],
+  [16, 16, 16],
   player,
   true,
 );
