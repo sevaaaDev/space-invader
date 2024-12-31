@@ -67,6 +67,11 @@ export class EnemyBase extends Actor {
       vent.emit("reversedirection", { sign: 1 });
     }
   }
+  override onPostUpdate(engine: Engine, elapsed: number): void {
+    if (this.pos.y + this.height / 2 >= engine.drawHeight) {
+      this.level?.gameOver();
+    }
+  }
   override onCollisionStart(
     _self: Collider,
     other: Collider,

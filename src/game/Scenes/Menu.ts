@@ -33,6 +33,10 @@ export class BaseMenu extends Scene {
     );
   }
   override onActivate(context: SceneActivationContext<unknown>): void {
+    if (ui === null) {
+      throw "Ui is null, maybe u forgot to add the element";
+    }
+    ui.innerHTML = "";
     this.initDOMListener();
     const title = document.createElement("h1");
     title.innerText = this._title;
