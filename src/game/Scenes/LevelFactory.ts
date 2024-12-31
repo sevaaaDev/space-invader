@@ -7,6 +7,7 @@ import { updateHealthBar } from "../../ui/healtbar";
 import { updateLevelUI } from "../../ui/levelUi";
 import { EnemyBullet } from "../Actors/EnemyBullet";
 import { PlayerBullet } from "../Actors/PlayerBullet";
+import { EnemyBase } from "../Actors/EnemyBase";
 
 export class BaseLevel extends Scene {
   private _playerLeft = (e: Event) => {
@@ -91,14 +92,7 @@ export class BaseLevel extends Scene {
     this.engine.goToScene("gameOverMenu");
   }
   checkWinning() {
-    if (
-      this.entities.filter(
-        (e) =>
-          !(e instanceof Player) &&
-          !(e instanceof EnemyBullet) &&
-          !(e instanceof PlayerBullet),
-      ).length <= 1
-    ) {
+    if (this.entities.filter((e) => e instanceof EnemyBase).length <= 1) {
       gameState.setState((s: any) => s.currentLevel++);
       this._player.invincible = true;
       this._player.actions
