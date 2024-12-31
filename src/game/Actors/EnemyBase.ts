@@ -53,7 +53,7 @@ export class EnemyBase extends Actor {
       if (Math.sign(this.vel.x) === e.sign) return;
       this.vel.x *= -1;
       if (this._isHardMode) {
-        this.pos.y += this.height;
+        this.pos.y += 16;
       }
     });
     this.scene?.addTimer(this._shootTimer);
