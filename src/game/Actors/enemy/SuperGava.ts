@@ -27,6 +27,7 @@ export class SuperGava extends EnemyBase {
     AnimationStrategy.End,
   );
   public health: number = 2;
+  private _totalGuns: number = 2;
   override shoot(): void {
     this.scene?.engine.add(
       new EnemyBullet({
@@ -36,6 +37,7 @@ export class SuperGava extends EnemyBase {
         height: 4,
       }),
     );
+    if (this._totalGuns === 1) return;
     this.scene?.engine.add(
       new EnemyBullet({
         pos: this.pos.clone().add(new Vector(-4, this.height / 2)),
@@ -48,6 +50,7 @@ export class SuperGava extends EnemyBase {
   override hit(): Animation | null {
     this.health--;
     this.graphics.use(sheet.getSprite(1, 0));
+    this._totalGuns = 1;
     if (this.health === 0) {
       this.graphics.use(this.anim);
       this.anim.events.once("end", () => this.kill());
