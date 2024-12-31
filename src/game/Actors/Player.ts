@@ -8,6 +8,7 @@ export class Player extends Actor {
   public health: number = 3;
   public level: BaseLevel | null = null;
   private _hasShot: boolean = false;
+  public invincible: boolean = false;
   public move: "Left" | "Right" | false = false;
   public shootTimer: Timer = new Timer({
     fcn: () => {
@@ -15,6 +16,14 @@ export class Player extends Actor {
       this.shootTimer.reset();
     },
     interval: 1000,
+  });
+  public respawnTimer: Timer = new Timer({
+    fcn: () => {
+      this.invincible = false;
+      console.log(this.invincible);
+      this.shootTimer.reset();
+    },
+    interval: 3000,
   });
   constructor(props: ActorArgs) {
     super({ ...props });
@@ -25,6 +34,9 @@ export class Player extends Actor {
   }
   setLevel(scene: BaseLevel) {
     this.level = scene;
+  }
+  getTimers() {
+    return [this.shootTimer, this.respawnTimer];
   }
   shoot() {
     if (!this._hasShot) {
@@ -80,13 +92,21 @@ export class Player extends Actor {
     }
   }
   hit() {
+    if (this.invincible) return;
     this.health--;
-    console.log("health", this.health);
     updateHealthBar(this.health);
     if (this.health === 0) {
       this.move = false;
       this.level?.gameOver();
+      return;
     }
+    this.invincible = true;
+    this.actions
+      .blink(200, 200, 5)
+      .delay(1000)
+      .callMethod(() => {
+        this.invincible = false;
+      });
   }
 }
 

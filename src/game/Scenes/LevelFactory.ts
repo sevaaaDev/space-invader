@@ -62,6 +62,7 @@ export class BaseLevel extends Scene {
       this.engine.halfDrawWidth,
       this.engine.drawHeight - 8,
     );
+    this._player.invincible = false;
     this._player.actions.clearActions();
     this._player.setLevel(this);
     if (this._player.health === 0) {
@@ -69,7 +70,10 @@ export class BaseLevel extends Scene {
       updateHealthBar(this._player.health);
     }
     this.add(this._player);
-    this.add(this._player.shootTimer);
+    let playerTimers = this._player.getTimers();
+    playerTimers.forEach((timer) => {
+      this.add(timer);
+    });
     let enemies = createEnemyPack(
       this._packRows,
       this._packCols,
@@ -80,6 +84,7 @@ export class BaseLevel extends Scene {
     enemies.forEach((e) => this.add(e));
   }
   gameOver() {
+    this._player.invincible = true;
     gameState.setState((s: any) => (s.currentLevel = 1));
     this._player.health = 3;
     updateHealthBar(3);
@@ -95,6 +100,7 @@ export class BaseLevel extends Scene {
       ).length <= 1
     ) {
       gameState.setState((s: any) => s.currentLevel++);
+      this._player.invincible = true;
       this._player.actions
         .moveTo(
           vec(this.engine.halfDrawWidth - 8, this.engine.drawHeight - 8),
