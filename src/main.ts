@@ -42,7 +42,13 @@ const lvl3 = createLevel(2, 6, ["Gava", "Gava"], [48, 48], player);
 const lvl4 = createLevel(2, 6, ["Borg", "Gava"], [48, 48], player);
 const lvl5 = createLevel(2, 7, ["Borg", "Gava"], [48, 48], player);
 const lvl6 = createLevel(2, 8, ["Borg", "Gava"], [48, 48], player);
-const lvl7 = createLevel(2, 8, ["Borg", "Gava"], [56, 56], player);
+const lvl7 = createLevel(
+  3,
+  8,
+  ["SuperGava", "Borg", "Gava"],
+  [56, 56, 56],
+  player,
+);
 const lvl8 = createLevel(
   3,
   8,
